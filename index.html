@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Roller Blinds</title>
+
+  <style>
+    :root {
+      --roller: #0b3a66;
+      --blinds: #5ec5e6;
+      --bg: #f9f9f9;
+      --text: #333;
+      --white: #fff;
+      --muted: #6b7280;
+      --transition: all 0.3s ease;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    /* NAVBAR */
+
+    header {
+      background: rgba(255,255,255,0.95);
+      border-bottom: 1px solid #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(4px);
+    }
+
+    .nav {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav__logo img {
+      height: 40px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    @media (min-width: 1024px) {
+      .nav__logo img {
+        height: 48px;
+      }
+    }
+
+    .nav__toggle {
+      display: none;
+    }
+
+    .nav__toggle-label {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 22px;
+      cursor: pointer;
+    }
+
+    .nav__toggle-label span,
+    .nav__toggle-label span::before,
+    .nav__toggle-label span::after {
+      content: "";
+      display: block;
+      height: 3px;
+      border-radius: 999px;
+      background: var(--roller);
+      transition: var(--transition);
+    }
+
+    .nav__toggle-label span::before {
+      position: relative;
+      top: -7px;
+    }
+
+    .nav__toggle-label span::after {
+      position: relative;
+      top: 7px;
+    }
+
+    .nav__links {
+      position: absolute;
+      top: 64px;
+      left: 0;
+      width: 100%;
+      background: #fff;
+      display: none;
+      flex-direction: column;
+      gap: 0.75rem;
+      padding: 1rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .nav__link {
+      font-size: 0.95rem;
+      padding: 0.3rem 0;
+    }
+
+    .nav__link--button {
+      background: var(--roller);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 0.45rem 1rem;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .nav__link--button:hover {
+      background: var(--blinds);
+      color: var(--roller);
+    }
+
+    .nav__toggle:checked ~ .nav__links {
+      display: flex;
+    }
+
+    .nav__toggle:checked + .nav__toggle-label span {
+      background: transparent;
+    }
+    .nav__toggle:checked + .nav__toggle-label span::before {
+      transform: rotate(45deg);
+      top: 0;
+    }
+    .nav__toggle:checked + .nav__toggle-label span::after {
+      transform: rotate(-45deg);
+      top: 0;
+    }
+
+    @media (min-width: 768px) {
+      .nav__toggle-label {
+        display: none;
+      }
+
+      .nav__links {
+        position: static;
+        width: auto;
+        display: flex !important;
+        flex-direction: row;
+        align-items: center;
+        gap: 1.5rem;
+        background: transparent;
+        border: none;
+        padding: 0;
+      }
+    }
+
+    /* HERO */
+
+    .hero {
+      background-image: url("https://images.unsplash.com/photo-1536627792483-9300ee53afdf?auto=format&fit=crop&q=80&w=1331");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      min-height: 75vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2.5rem 1rem;
+      color: #fff;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    }
+
+    @media (min-width: 1024px) {
+      .hero {
+        min-height: 55vh;
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+      }
+    }
+
+    .hero-inner {
+      max-width: 650px;
+    }
+
+    .hero h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .hero p {
+      font-size: 1rem;
+      margin-bottom: 1.3rem;
+    }
+
+    .hero-btn {
+      display: inline-block;
+      padding: 0.6rem 1.3rem;
+      border-radius: 999px;
+      border: none;
+      background: var(--blinds);
+      color: var(--roller);
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .hero-btn:hover {
+      background: #fff;
+      color: var(--roller);
+    }
+
+    /* ABOUT */
+
+    .about {
+      padding: 3rem 1rem;
+      background: rgba(255,255,255,0.97);
+    }
+
+    .about-center {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .about h2 {
+      font-size: 1.7rem;
+      color: var(--roller);
+      margin-bottom: 1rem;
+    }
+
+    .about p {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 1.3rem;
+    }
+
+    .about-list {
+      list-style: none;
+      font-size: 0.95rem;
+      color: var(--roller);
+    }
+
+    .about-list li {
+      margin-bottom: 0.4rem;
+      font-weight: 500;
+    }
+
+    /* FEATURES */
+
+    .features {
+      padding: 3rem 1rem 3.5rem;
+      background: #e6f7ff;
+      text-align: center;
+    }
+
+    .features-heading {
+      font-size: 1.7rem;
+      color: var(--roller);
+      margin-bottom: 0.3rem;
+    }
+
+    .features-subtext {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+
+    .features-grid {
+      display: grid;
+      gap: 1.2rem;
+    }
+
+    @media (max-width: 639px) {
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (min-width: 640px) and (max-width: 1023px) {
+      .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+        justify-items: center;
+      }
+    }
+
+    .feature-card {
+      background: #fff;
+      border-radius: 0.8rem;
+      padding: 1rem 0.9rem;
+      box-shadow: 0 4px 15px rgba(15,23,42,0.06);
+      border: 1px solid #e5e7eb;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.35rem;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(15,23,42,0.12);
+      border-color: var(--blinds);
+    }
+
+    .feature-icon {
+      margin-bottom: 0.15rem;
+    }
+
+    .feature-icon svg {
+      width: 26px;
+      height: 26px;
+      stroke: var(--roller);
+      stroke-width: 1.7;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      display: block;
+    }
+
+    .feature-card h3 {
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: var(--roller);
+      text-align: center;
+    }
+
+    .feature-card p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.4;
+      text-align: center;
+    }
+
+    /* GALLERY */
+    .gallery {
+      padding: 60px 60px;
+      background: white;
+    }
+
+    .gallery h2 {
+      text-align: center;
+      font-size: 40px;
+      color: var(--roller);
+      margin-bottom: 40px;
+    }
+
+    .gallery h3 {
+      text-align: center;
+      font-size: 18px;
+      color: var(--blinds);
+      margin-bottom: 15px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      grid-auto-rows: 280px;
+    }
+
+    .gallery-grid .big {
+      grid-column: 3;
+      grid-row: span 2;
+    }
+
+    .img-box {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .img-text {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      color: #ffffff;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-shadow: 0px 2px 6px rgba(0, 0, 0, 0.45);
+      user-select: text;
+      pointer-events: auto;
+    }
+
+    .img-box:hover img {
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 992px) {
+      .gallery {
+        padding: 50px 30px;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-auto-rows: 240px;
+      }
+
+      .gallery-grid .big {
+        grid-column: span 1;
+        grid-row: auto;
+      }
+
+      .img-text {
+        font-size: 20px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .gallery {
+        padding: 40px 20px;
+      }
+
+      .gallery h2 {
+        font-size: 28px;
+        margin-bottom: 24px;
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr;
+        grid-auto-rows: 220px;
+        gap: 16px;
+      }
+
+      .gallery-grid .big {
+        grid-column: auto;
+        grid-row: auto;
+      }
+
+      .img-text {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <div class="nav">
+        <a href="#home" class="nav__logo">
+          <img src="images/logo.png" alt="Logo">
+        </a>
+
+        <input type="checkbox" id="nav-toggle" class="nav__toggle" />
+        <label for="nav-toggle" class="nav__toggle-label">
+          <span></span>
+        </label>
+
+        <nav class="nav__links">
+          <a href="#home" class="nav__link">Home</a>
+          <a href="#about" class="nav__link">About</a>
+          <a href="#products" class="nav__link">Products</a>
+          <a href="#contact" class="nav__link">Contact Us</a>
+          <a href="#quote" class="nav__link nav__link--button">Get Quote</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero" id="home">
+    <div class="hero-inner">
+      <h1>Stylish Roller Blinds for Every Space</h1>
+      <p>Blackout, sunscreen and motorized blinds tailored to your windows with professional installation.</p>
+      <button class="hero-btn">View Features</button>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="container about-center">
+      <h2>About Us</h2>
+      <p>
+        We deliver premium roller blinds tailored to your space — modern fabrics,
+        precision measurements, professional installation and aftercare.
+        Trusted by homeowners and interior designers for beautiful, long-lasting results.
+      </p>
+
+      <ul class="about-list">
+        <li>✔ Custom sizes & on-site measurement</li>
+        <li>✔ 2-year installation warranty</li>
+        <li>✔ Smart (motorized) options available</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="features" id="products">
+    <div class="container">
+      <h2 class="features-heading">Roller Blind Features</h2>
+      <p class="features-subtext">Comfort, control and privacy — built into every blind.</p>
+
+      <div class="features-grid">
+
+        <article class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="4" />
+              <line x1="12" y1="2" x2="12" y2="4" />
+              <line x1="12" y1="20" x2="12" y2="22" />
+              <line x1="4" y1="12" x2="2" y2="12" />
+              <line x1="22" y1="12" x2="20" y2="12" />
+            </svg>
+          </div>
+          <h3>UV Protection</h3>
+          <p>Blocks harsh sunlight and harmful UV rays while keeping your interiors cool.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24">
+              <rect x="8" y="3" width="8" height="18" rx="2" />
+              <circle cx="12" cy="16" r="1.3" />
+            </svg>
+          </div>
+          <h3>Motorized Operation</h3>
+          <p>Control your blinds with a remote or smart home integration for convenience.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24">
+              <rect x="9" y="3" width="6" height="12" rx="3" />
+              <line x1="12" y1="15" x2="12" y2="21" />
+            </svg>
+          </div>
+          <h3>Heat Reduction</h3>
+          <p>Reduces indoor heat and maintains a comfortable room temperature.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M5 10v4h3l4 3V7l-4 3H5z" />
+              <path d="M17 9a3 3 0 0 1 0 6" />
+            </svg>
+          </div>
+          <h3>Noise Reduction</h3>
+          <p>Minimizes outside noise using thick, premium fabric layers.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24">
+              <rect x="4" y="5" width="14" height="10" rx="1" />
+              <path d="M6 9h10" />
+            </svg>
+          </div>
+          <h3>Premium Fabric Quality</h3>
+          <p>High-quality fabrics with blackout, sunscreen, and designer textures.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 4c-2.5 3-5 5.8-5 8.5A5 5 0 0 0 17 13" />
+            </svg>
+          </div>
+          <h3>Waterproof Material</h3>
+          <p>Perfect for kitchens and bathrooms with moisture-resistant material.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M2.5 12s2.7-5 9.5-5 9.5 5 9.5 5-2.7 5-9.5 5-9.5-5-9.5-5z" />
+              <circle cx="12" cy="12" r="2.3" />
+            </svg>
+          </div>
+          <h3>Privacy Control</h3>
+          <p>Ensures complete daytime and nighttime privacy for your home.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M5 16l3-7 3 7" />
+              <line x1="6" y1="14" x2="10" y2="14" />
+            </svg>
+          </div>
+          <h3>Easy Cleaning</h3>
+          <p>Low-maintenance blinds that stay clean with just a light wipe.</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- STATIC GALLERY -->
+  <section class="gallery" id="gallery">
+    <h3>GALLERY</h3>
+     
+
+    <div class="gallery-grid">
+
+      <div class="img-box">
+        <img src="https://static.asianpaints.com/content/dam/asian_paints/blog/december-22/living-room-curtain-designs-for-every-style/sheer-curtain-design.jpg" alt="dual-curtain">
+        <span class="img-text">DUAL CURTAIN</span>
+      </div>
+
+      <div class="img-box">
+        <img src="https://media.istockphoto.com/id/2208111831/photo/motorized-wood-blinds-operating-with-control-panel.webp?a=1&b=1&s=612x612&w=0&k=20&c=AQHXrIBq06Yh5eEl-aUaGbpMaJuArQ2UhBbit_0vN9k=" alt="motorised curtain track">
+        <span class="img-text">MOTORISED TRACK</span>
+      </div>
+
+      <div class="img-box big">
+        <img src="https://i.pinimg.com/474x/91/90/8d/91908d2991e12407d98a3886b200f883.jpg" alt="roller blinds">
+        <span class="img-text">ROLLER BLINDS</span>
+      </div>
+
+      <div class="img-box">
+        <img src="https://idealblinds.co.uk/wp-content/uploads/2014/05/vertical-blinds.jpg" alt="vertical blinds">
+        <span class="img-text">VERTICAL BLINDS</span>
+      </div>
+
+      <div class="img-box">
+        <img src="https://designdecorblinds.com/wp-content/uploads/2015/06/Collinear-blind_11.jpg" alt="collinear blinds">
+        <span class="img-text">COLLINEAR BLINDS</span>
+      </div>
+
+      <div class="img-box">
+        <img src="https://i.pinimg.com/474x/f4/ef/df/f4efdf74489878f56a2627d158128fdc.jpg" alt="wooden blinds">
+        <span class="img-text">WOODEN BLINDS</span>
+      </div>
+
+      <div class="img-box">
+        <img src="https://www.fabricsandpapers.com/media/wysiwyg/roman-blinds.jpg" alt="roman blinds">
+        <span class="img-text">ROMAN BLINDS</span>
+      </div>
+
+      <div class="img-box">
+        <img src="https://i.pinimg.com/564x/3d/d7/6d/3dd76d3c3d6be9e587a2e35d75294d7d.jpg" alt="skylite blinds">
+        <span class="img-text">SKYLITE BLINDS</span>
+      </div>
+
+      <div class="img-box">
+        <img src="https://www.chicology.com/cdn/shop/files/CellularShades_LF_MorningCroissant_1.jpg?v=1763077243&width=2000" alt="cellular blinds">
+        <span class="img-text">CELLULAR BLINDS</span>
+      </div>
+
+      <div class="img-box">
+        <img src="https://h2imports.ca/wp-content/uploads/2024/03/Zebra-blinds-1.webp" alt="zebra blinds">
+        <span class="img-text">ZEBRA BLINDS</span>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="contact" class="contact-section">
+    <div class="contact-container">
+    </div>
+  </section>
+
+</body>
+</html>
